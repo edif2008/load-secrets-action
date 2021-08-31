@@ -3,8 +3,15 @@
 set -e
 
 # Install op-cli
-curl -sSfLo op.zip "https://drive.google.com/uc?export=download&id=1ih-kXa-5Jui4U-VETWbFqzfYUROB_Ukr"
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  curl -sSfLo op.zip "https://bucket.agilebits.com/cli-private-beta/v2/op_linux_amd64_v2-alpha2.zip"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  curl -sSfLo op.zip "https://bucket.agilebits.com/cli-private-beta/v2/op_darwin_amd64_v2-alpha2.zip"
+# elif [[ "$OSTYPE" == "msys"* ]]; then 
+#   curl -sSfLo op.zip "https://bucket.agilebits.com/cli-private-beta/v2/op_windows_amd64_v2-alpha2.zip"
+fi
 unzip -od /usr/local/bin/ op.zip && rm op.zip
+chmod +x /usr/local/bin/op
 
 if [ -z "$OP_CONNECT_TOKEN" ] || [ -z "$OP_CONNECT_HOST" ]; then
   echo "\$OP_CONNECT_TOKEN and \$OP_CONNECT_HOST must be set"
@@ -47,7 +54,8 @@ for env_var in $(op env ls); do
 
   # Register a mask for the secret to prevent accidental log exposure.
   # To support multiline secrets, escape percent signs and add a mask per line.
-  escaped_mask_value=$(echo "$secret_value" | sed -e 's/%/%25/g')
+  # escaped_mask_value=$(echo "$secret_value" | sed -e 's/%/%25/g')
+  escaped_mask_value="${secret_value//'%'/'%25'}"
   IFS=$'\n'
   for line in $escaped_mask_value; do
     if [ "${#line}" -lt 3 ]; then
@@ -58,19 +66,34 @@ for env_var in $(op env ls); do
   done
   unset IFS
 
-  # To support multiline secrets, we'll use the heredoc syntax to populate the environment variables.
-  # As the heredoc identifier, we'll use a randomly generated 64-character string,
-  # so that collisions are practically impossible.
-  random_heredoc_identifier=$(openssl rand -hex 16)
+  if [ "$INPUT_EXPORT_ENV" == "true" ]; then
+    # To support multiline secrets, we'll use the heredoc syntax to populate the environment variables.
+    # As the heredoc identifier, we'll use a randomly generated 64-character string,
+    # so that collisions are practically impossible.
+    random_heredoc_identifier=$(openssl rand -hex 16)
+  
+    {
+      # Populate env var, using heredoc syntax with generated identifier
+      echo "$env_var<<${random_heredoc_identifier}"
+      echo "$secret_value"
+      echo "${random_heredoc_identifier}"
+    } >> $GITHUB_ENV
 
-  {
-    # Populate env var, using heredoc syntax with generated identifier
-    echo "$env_var<<${random_heredoc_identifier}"
-    echo "$secret_value"
-    echo "${random_heredoc_identifier}"
-  } >> $GITHUB_ENV
+    managed_variables+=("$env_var")
 
-  managed_variables+=("$env_var")
+  else
+    # Prepare the secret_value to be outputed properly (especially multiline secrets)
+    secret_value="${secret_value//'%'/'%25'}"
+    secret_value="${secret_value//$'\n'/'%0A'}"
+    secret_value="${secret_value//$'\r'/'%0D'}"
+
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+      secret_value=$(echo "$secret_value" | tr -d "'")
+    fi
+
+    echo "::set-output name=$env_var::$secret_value"
+  fi
+
 done
 unset IFS
 

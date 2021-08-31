@@ -1,0 +1,24 @@
+{
+    "name": "load-secrets-action",
+    "version": "1.0.0",
+    "description": "The action to load secrets from [1Password Connect](https://1password.com/secrets/) into GitHub Actions.",
+    "main": "index.js",
+    "directories": {
+        "test": "tests"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/edif2008/load-secrets-action.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/edif2008/load-secrets-action/issues"
+    },
+    "homepage": "https://github.com/edif2008/load-secrets-action#readme",
+    "dependencies": {
+        "@actions/core": "^1.5.0",
+        "@actions/exec": "^1.1.0",
+        "@actions/github": "^5.0.0"
+    }
+}
