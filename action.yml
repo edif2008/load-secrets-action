@@ -9,7 +9,7 @@ inputs:
     description: Whether to unset environment variables populated by 1Password in earlier job steps
     default: false
   export-env:
-    description: Export the secrets as environment variables
+    description: Export the loaded secrets as environment variables
     default: false
 runs:
   using: 'docker'
