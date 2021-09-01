@@ -82,14 +82,7 @@ for env_var in $(op env ls); do
     managed_variables+=("$env_var")
 
   else
-    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-      # Prepare the secret_value to be outputed properly (especially multiline secrets)
-      secret_value="${secret_value//'%'/'%25'}"
-      secret_value="${secret_value//$'\n'/'%0A'}"
-      secret_value="${secret_value//$'\r'/'%0D'}"
-    elif [[ "$OSTYPE" == "darwin"* ]]; then
-      secret_value=$(echo "$secret_value" | awk -v ORS='%0A' '1')
-    fi
+    secret_value=$(echo "$secret_value" | awk -v ORS='%0A' '1')
 
     echo "::set-output name=$env_var::$secret_value"
   fi
