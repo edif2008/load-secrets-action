@@ -9,7 +9,7 @@ jobs:
       - name: Configure 1Password Connect
         uses: ./configure # 1password/load-secrets-action/configure@<version>
         with:
-          connect-host: https://09f5-2001-1c00-b05-c700-bcfb-c9ea-be31-2157.ngrok.io
+          connect-host:	https://c60f-2001-1c00-b05-c700-fd35-1825-ff82-7658.ngrok.io
           connect-token: ${{ secrets.OP_CONNECT_TOKEN }}
       - name: Load secrets
         id: load_secrets
@@ -32,7 +32,7 @@ jobs:
       - name: Configure 1Password Connect
         uses: ./configure # 1password/load-secrets-action/configure@<version>
         with:
-          connect-host: https://09f5-2001-1c00-b05-c700-bcfb-c9ea-be31-2157.ngrok.io
+          connect-host:	https://c60f-2001-1c00-b05-c700-fd35-1825-ff82-7658.ngrok.io
           connect-token: ${{ secrets.OP_CONNECT_TOKEN }}
       - name: Load secrets
         id: load_secrets
@@ -61,7 +61,7 @@ jobs:
       - name: Configure 1Password Connect
         uses: ./configure # 1password/load-secrets-action/configure@<version>
         with:
-          connect-host: https://09f5-2001-1c00-b05-c700-bcfb-c9ea-be31-2157.ngrok.io
+          connect-host: https://c60f-2001-1c00-b05-c700-fd35-1825-ff82-7658.ngrok.io
           connect-token: ${{ secrets.OP_CONNECT_TOKEN }}
       - name: Load secrets
         id: load_secrets
@@ -84,7 +84,7 @@ jobs:
       - name: Configure 1Password Connect
         uses: ./configure # 1password/load-secrets-action/configure@<version>
         with:
-          connect-host: https://09f5-2001-1c00-b05-c700-bcfb-c9ea-be31-2157.ngrok.io
+          connect-host: https://c60f-2001-1c00-b05-c700-fd35-1825-ff82-7658.ngrok.io
           connect-token: ${{ secrets.OP_CONNECT_TOKEN }}
       - name: Load secrets
         id: load_secrets
