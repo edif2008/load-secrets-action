@@ -236,10 +236,10 @@ You can run the action on Linux and macOS runners. Windows is currently not supp
 
 1Password requests you practice responsible disclosure if you discover a vulnerability.
 
-Please file requests via BugCrowd.
+Please file requests via [**BugCrowd**](https://bugcrowd.com/agilebits).
 
-For information about security practices, please visit our Security homepage.
+For information about security practices, please visit our [Security homepage](https://bugcrowd.com/agilebits).
 
 ## Getting help
 
-If you find yourself stuck, visit our Support Page for help.
+If you find yourself stuck, visit our [**Support Page**](https://support.1password.com/) for help.
