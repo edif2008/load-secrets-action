@@ -7,8 +7,6 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   curl -sSfLo op.zip "https://bucket.agilebits.com/cli-private-beta/v2/op_linux_amd64_v2-alpha2.zip"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   curl -sSfLo op.zip "https://bucket.agilebits.com/cli-private-beta/v2/op_darwin_amd64_v2-alpha2.zip"
-# elif [[ "$OSTYPE" == "msys"* ]]; then 
-#   curl -sSfLo op.zip "https://bucket.agilebits.com/cli-private-beta/v2/op_windows_amd64_v2-alpha2.zip"
 fi
 unzip -od /usr/local/bin/ op.zip && rm op.zip
 chmod +x /usr/local/bin/op
@@ -82,6 +80,7 @@ for env_var in $(op env ls); do
     managed_variables+=("$env_var")
 
   else
+    # Prepare the secret_value to be outputed properly (especially multiline secrets)
     secret_value=$(echo "$secret_value" | awk -v ORS='%0A' '1')
 
     echo "::set-output name=$env_var::$secret_value"
