@@ -88,7 +88,7 @@ for env_var in $(op env ls); do
       secret_value="${secret_value//$'\n'/'%0A'}"
       secret_value="${secret_value//$'\r'/'%0D'}"
     elif [[ "$OSTYPE" == "darwin"* ]]; then
-      secret_value=$(echo "$secret_value" | awk -v ORS='STOP' '1')
+      secret_value=$(echo "$secret_value" | awk -v ORS='%0D' '1')
     fi
 
     echo "::set-output name=$env_var::$secret_value"
