@@ -82,15 +82,13 @@ for env_var in $(op env ls); do
     managed_variables+=("$env_var")
 
   else
-    # Prepare the secret_value to be outputed properly (especially multiline secrets)
-    secret_value="${secret_value//'%'/'%25'}"
-    secret_value="${secret_value//$'\n'/'%0A'}"
-    secret_value="${secret_value//$'\r'/'%0D'}"
-
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-      secret_value=$(echo "$secret_value" | sed -e "s/'%0A'/%0A/")
-      secret_value=$(echo "$secret_value" | sed -e "s/'%0D'/%0D/")
-      secret_value=$(echo "$secret_value" | sed -e "s/'%0D0A'/%0D0A/")
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+      # Prepare the secret_value to be outputed properly (especially multiline secrets)
+      secret_value="${secret_value//'%'/'%25'}"
+      secret_value="${secret_value//$'\n'/'%0A'}"
+      secret_value="${secret_value//$'\r'/'%0D'}"
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+      secret_value=$(echo "$secret_value" | awk -v ORS='STOP' '1')
     fi
 
     echo "::set-output name=$env_var::$secret_value"
