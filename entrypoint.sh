@@ -89,6 +89,8 @@ for env_var in $(op env ls); do
 
     if [[ "$OSTYPE" == "darwin"* ]]; then
       secret_value=$(echo "$secret_value" | sed -e "s/'%0A'/%0A/")
+      secret_value=$(echo "$secret_value" | sed -e "s/'%0D'/%0D/")
+      secret_value=$(echo "$secret_value" | sed -e "s/'%0D0A'/%0D0A/")
     fi
 
     echo "::set-output name=$env_var::$secret_value"
