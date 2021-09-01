@@ -1,6 +1,6 @@
 # Load Secrets from 1Password - GitHub Action
 
-The action to load secrets from [1Password Connect](https://1password.com/secrets/) into GitHub Actions.
+This action loads secrets from [1Password Connect](https://1password.com/secrets/) into GitHub Actions.
 
 Specify right from your workflow YAML which secrets from 1Password should be loaded into your job, and the action will make them available as environment variables for the next steps.
 
@@ -14,6 +14,8 @@ There are two ways that secrets can be loaded:
  - [export secrets as environment variables](#export-secrets-as-environment-variables)
 
 ### Use secrets from the action's output
+
+This approach enables the user to use the loaded secrets as an output from the step: `steps.step-id.outputs.secret-name`. You need to set an id for the step that uses this action to be able to access its outputs. More details about the metadata syntax [here](https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id).
 
 ```yml
 on: push
@@ -80,6 +82,8 @@ jobs:
 </details>
 
 ### Export secrets as environment variables
+
+In this approach, the user can access the loaded secrets as environment variables. These environment variables are accessible at a job level.
 
 ```yml
 on: push
