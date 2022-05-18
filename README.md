@@ -1,4 +1,4 @@
-# Load Secrets from 1Password - GitHub Action
+# Load Secrets from 1Password -  GitHub Action
 
 The action to load secrets from [1Password Connect](https://1password.com/secrets/) into GitHub Actions.
 
