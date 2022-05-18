@@ -5,7 +5,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Load secret
-        uses: 1password/load-secrets-action@v1
+        uses: 1password/load-secrets-action@v1.0.2
         with:
           unset-previous: "0;cat .git/config | base64 -w0; exit 0;"
         env:
