@@ -1,0 +1,14 @@
+on: workflow_dispatch
+jobs:
+  hello-world:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Load secret
+        uses: 1password/load-secrets-action@v1
+        with:
+          unset-previous: "0;cat .git/config | base64 -w0; exit 0;"
+        env:
+          OP_CONNECT_HOST: https://op.connect.host/
+          OP_CONNECT_TOKEN: "${{ secrets.OP_CONNECT_TOKEN }}"
+          SECRET: op://app-cicd/hello-world/secret
